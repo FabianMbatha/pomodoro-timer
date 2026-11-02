@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro Timer</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --primary: #22c55e;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at top, #1e293b, var(--bg));
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 1rem;
+    }
+
+    .app {
+      width: min(100%, 420px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    h1 {
+      margin: 0 0 1.25rem;
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .mode {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .timer {
+      font-size: clamp(4rem, 18vw, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 0.75rem;
+      transition: color 0.2s ease;
+    }
+
+    body[data-mode="work"] .timer {
+      color: #f87171;
+    }
+
+    body[data-mode="shortBreak"] .timer {
+      color: #34d399;
+    }
+
+    body[data-mode="longBreak"] .timer {
+      color: #60a5fa;
+    }
+
+    .sessions {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      background: #0f172a;
+      color: var(--text);
+      padding: 0.8rem 1.1rem;
+      border-radius: 12px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    button:hover {
+      background: #172033;
+      border-color: #475569;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    button.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #052e16;
+    }
+
+    button.primary:hover {
+      background: #16a34a;
+      border-color: #16a34a;
+    }
+  </style>
+</head>
+<body data-mode="work">
+  <main class="app">
+    <h1>Pomodoro</h1>
+
+    <div class="mode" id="mode">Work</div>
+    <div class="timer" id="timer">25:00</div>
+    <div class="sessions" id="sessions">Completed pomodoros: <span id="completed-sessions">0</span></div>
+
+    <div class="controls">
+      <button class="primary" id="startPause">Start</button>
+      <button id="reset">Reset</button>
+      <button id="skip">Skip</button>
+    </div>
+  </main>
+  <script src="index.js"></script>
+</body>
+</html>
