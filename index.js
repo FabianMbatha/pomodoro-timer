@@ -10,9 +10,9 @@ let isResting = false;
 
 let timer;
 let completed = 0;
-let workTime = 5;
-let restTime = 3;
-let count = isResting ? (restTime * 1) : (workTime * 1);
+let workTime = 25;
+let restTime = 5;
+let count = isResting ? (restTime * 60) : (workTime * 60);
 
 function formatTime(totalSeconds) {
     let minutes = Math.floor(totalSeconds / 60);
@@ -54,13 +54,14 @@ function startCountdown() {
 
         if (count <= 0) {
             if (!isResting) {
+                timerBell()
                 clearInterval(timer);
                 timer = null;
 
                 isResting = true;
                 isPaused = true;
 
-                count = 3;
+                count = 5 * 60;
 
                 render(formatTime(count));
 
@@ -69,13 +70,14 @@ function startCountdown() {
 
                 return;
             } else {
+                timerBell()
                 clearInterval(timer);
                 timer = null;
 
                 isPaused = true;
                 isResting = false;
 
-                count = 5;
+                count = 25 * 60;
 
                 completed++;
                 completedSessions.innerText = completed;
@@ -99,7 +101,7 @@ function resetCountdown() {
         startPause.style.backgroundColor = "#22c55e"
     }
         isPaused = true;
-        count = 5;
+        count = 25 * 60;
         countdown.textContent = formatTime(count);
         startPause.textContent = "Start";
 }
@@ -114,7 +116,7 @@ function skipCountdown() {
     }
         
         isResting = !isResting;
-        count = isResting ? restTime : workTime;
+        count = isResting ? restTime * 60 : workTime * 60;
 
         isPaused = true;
         render(formatTime(count));
@@ -123,6 +125,11 @@ function skipCountdown() {
     
 }
 
+function timerBell() {
+    const audio = new Audio("bell.mp3");
+    audio.play();
+}
+ 
 reset.addEventListener("click", resetCountdown);
 startPause.addEventListener("click", startCountdown);
 skip.addEventListener("click", skipCountdown);
